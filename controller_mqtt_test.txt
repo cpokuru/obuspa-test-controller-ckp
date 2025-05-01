@@ -1,0 +1,31 @@
+# Controller identity
+Device.LocalAgent.EndpointID "test_controller_mqtt"
+
+# MQTT Client Configuration
+Device.MQTT.Client.1.BrokerAddress "192.168.64.2"
+Device.MQTT.Client.1.ProtocolVersion "5.0"
+Device.MQTT.Client.1.BrokerPort "1883"
+Device.MQTT.Client.1.TransportProtocol "TCP/IP"
+Device.MQTT.Client.1.Username ""
+Device.MQTT.Client.1.Password ""
+Device.MQTT.Client.1.Alias "controller-1"
+Device.MQTT.Client.1.Enable true
+Device.MQTT.Client.1.ClientID "controller-client-001"
+Device.MQTT.Client.1.KeepAliveTime "60"
+
+# MTP Configuration
+Device.LocalAgent.MTP.1.Alias "controller-mtp-1"
+Device.LocalAgent.MTP.1.Enable true
+Device.LocalAgent.MTP.1.Protocol "MQTT"
+Device.LocalAgent.MTP.1.MQTT.Reference "Device.MQTT.Client.1"
+Device.LocalAgent.MTP.1.MQTT.ResponseTopicConfigured "/usp/agent"
+
+# Agent Configuration
+Device.LocalAgent.Controller.1.Alias "agent-1"
+Device.LocalAgent.Controller.1.Enable true
+Device.LocalAgent.Controller.1.EndpointID "test_agent_mqtt"
+Device.LocalAgent.Controller.1.MTP.1.Alias "agent-mtp-1"
+Device.LocalAgent.Controller.1.MTP.1.Enable true
+Device.LocalAgent.Controller.1.MTP.1.Protocol "MQTT"
+Device.LocalAgent.Controller.1.MTP.1.MQTT.Reference "Device.MQTT.Client.1"
+Device.LocalAgent.Controller.1.MTP.1.MQTT.Topic "/usp/agent"

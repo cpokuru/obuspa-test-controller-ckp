@@ -1,0 +1,144 @@
+tu@ubuntu:~$ obuspa -c instances Device.LocalAgent
+Device.LocalAgent.Controller.1
+Device.LocalAgent.Controller.1.MTP.1
+Device.LocalAgent.ControllerTrust.Role.1
+Device.LocalAgent.ControllerTrust.Role.1.Permission.1
+Device.LocalAgent.ControllerTrust.Role.2
+Device.LocalAgent.ControllerTrust.Role.2.Permission.1
+Device.LocalAgent.ControllerTrust.Role.2.Permission.2
+Device.LocalAgent.ControllerTrust.Role.2.Permission.3
+Device.LocalAgent.ControllerTrust.Role.2.Permission.4
+Device.LocalAgent.MTP.1
+(myenv) ubuntu@ubuntu:~$ obuspa -c get Device.LocalAgent.EndpointID
+Device.LocalAgent.EndpointID => test_controller_mqtt
+(myenv) ubuntu@ubuntu:~$ $ obuspa -c show database
+$: command not found
+(myenv) ubuntu@ubuntu:~$ obuspa -c show database
+Running command on database /usr/local/var/obuspa/usp.db
+nu_macaddr_wan_macaddr: ioctl() failed. Unable to get MAC address for interface eth0 (errno=19, No such device)
+(myenv) ubuntu@ubuntu:~$ 
+(myenv) ubuntu@ubuntu:~$ obuspa -c get "Device.DeviceInfo."
+Device.DeviceInfo.SoftwareVersion => 
+Device.DeviceInfo.ProductClass => USP Agent
+Device.DeviceInfo.Manufacturer => Manufacturer
+Device.DeviceInfo.ModelName => USP Agent
+Device.DeviceInfo.HardwareVersion => 
+Device.DeviceInfo.ManufacturerOUI => 012345
+Device.DeviceInfo.SerialNumber => 525400D1D570
+(myenv) ubuntu@ubuntu:~$ 
+
+
+oller$ ./obuspa -p -v 4 -r controller_mqtt_test.txt -i enp0s1 -d /usr/local/var/obuspa/controller.db
+DATABASE_Init: Opening database /usr/local/var/obuspa/controller.db
+LoadClientCert: Not using a device certificate for connections
+EnableClient (MoveState_Private): Idle --> [[ Starting Connection ]] --> SendingConnect
+Connect: No username found - so not using one
+LogCallback: MQTT Debug: Client controller-client-001 sending CONNECT
+MQTT_ProcessAllSocketActivity (MoveState_Private): SendingConnect --> [[ Connect sent ]] --> AwaitingConnect
+LogCallback: MQTT Debug: Client controller-client-001 received CONNACK (0)
+ConnectV5Callback: No cert chain, so cannot get controller trust
+ConnectV5Callback: Received client id "controller-client-001"
+ConnectV5Callback (MoveState_Private): AwaitingConnect --> [[ Connect Callback Received ]] --> Running
+Subscribe: Sending subscribe to /usp/agent 0 2
+LogCallback: MQTT Debug: Client controller-client-001 sending SUBSCRIBE (Mid: 1, Topic: /usp/agent, QoS: 2, Options: 0x00)
+LogCallback: MQTT Debug: Client controller-client-001 received SUBACK
+LogCallback: MQTT Debug: Client controller-client-001 sending PINGREQ
+LogCallback: MQTT Debug: Client controller-client-001 received PINGRESP
+LogCallback: MQTT Debug: Client controller-client-001 sending PINGREQ
+LogCallback: MQTT Debug: Client controller-client-001 received PINGRESP
+LogCallback: MQTT Debug: Client controller-client-001 sending PINGREQ
+LogCallback: MQTT Debug: Client controller-client-001 received PINGRESP
+LogCallback: MQTT Debug: Client controller-client-001 sending PINGREQ
+LogCallback: MQTT Debug: Client controller-client-001 received PINGRESP
+LogCallback: MQTT Debug: Client controller-client-001 sending PINGREQ
+LogCallback: MQTT Debug: Client controller-client-001 received PINGRESP
+LogCallback: MQTT Debug: Client controller-client-001 sending PINGREQ
+LogCallback: MQTT Debug: Client controller-client-001 received PINGRESP
+
+tu@ubuntu:~/obuspa$ obuspa -p -v 4 -r agent_mqtt_test.txt -i enp0s1 -d /usr/local/var/obuspa/agent.db
+DATABASE_Init: Opening database /usr/local/var/obuspa/agent.db
+ResetFactoryParametersFromFile: Setting factory reset parameters
+LoadClientCert: Not using a device certificate for connections
+Attempting to connect to host=192.168.64.2 (port=1883, unencrypted)
+CLI_SERVER_Init: Starting CLI server on /tmp/usp_cli
+PerformMqttClientConnect: No username found
+Sending CONNECT frame to (host=192.168.64.2, port=1883)
+CONNECT
+client_id: agent-client-001
+clean_session: 1
+version: v5
+user_property: usp-endpoint-id = test_agent_mqtt
+request_response_info: 0
+keep_alive: 60
+ 
+Received CONNACK frame from (host=192.168.64.2, port=1883)
+ConnectV5Callback: Failed to determine controller trust role - No cert chain
+CONNACK
+ 
+Sending SUBSCRIBE frame to (host=192.168.64.2, port=1883)
+SUBSCRIBE
+user_property: usp-endpoint-id = test_agent_mqtt
+topic: /usp/controller
+mid: 1
+ 
+Received SUBACK frame from (host=192.168.64.2, port=1883)
+SUBACK
+topic: /usp/controller
+mid: 1
+granted_qos: 0
+ 
+
+
+USP_CONNECT_RECORD sending at time 2025-05-01T03:41:15Z, to host 192.168.64.2 over MQTT
+PUBLISH
+topic: /usp/controller
+content_type: usp.msg
+response_topic: /usp/controller
+mid: 2
+
+version: "1.3"
+to_id: "test_controller_mqtt"
+from_id: "test_agent_mqtt"
+payload_security: PLAINTEXT
+mac_signature[0]
+sender_cert[0]
+mqtt_connect {
+  version: V5
+  subscribed_topic: "/usp/controller"
+}
+
+
+Received PUBACK frame from (host=192.168.64.2, port=1883, mid=2)
+
+
+Message received at time 2025-05-01T03:41:15Z, from host 192.168.64.2 over MQTT
+MESSAGE
+mid: 0
+topic: /usp/controller
+response_topic: /usp/controller
+ 
+USP_CONNECT_RECORD received at time 2025-05-01T03:41:15Z, from endpoint_id=(null) over MQTT
+version: "1.3"
+to_id: "test_controller_mqtt"
+from_id: "test_agent_mqtt"
+payload_security: PLAINTEXT
+mac_signature[0]
+sender_cert[0]
+mqtt_connect {
+  version: V5
+  subscribed_topic: "/usp/controller"
+}
+
+
+Sending PINGREQ at time 1746070935
+Received PINGRESP at time 1746070935
+Sending PINGREQ at time 1746070996
+Received PINGRESP at time 1746070996
+Sending PINGREQ at time 1746071056
+Received PINGRESP at time 1746071056
+Sending PINGREQ at time 1746071116
+Received PINGRESP at time 1746071116
+Sending PINGREQ at time 1746071175
+Received PINGRESP at time 1746071175
+Sending PINGREQ at time 1746071236
+Received PINGRESP at time 1746071236

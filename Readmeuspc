@@ -1,0 +1,28 @@
+#!/bin/bash
+# Clone and build the OB-USP-Agent Test Controller
+git clone https://github.com/BroadbandForum/obuspa-test-controller.git
+cd obuspa-test-controller
+
+# Install dependencies (if not already installed)
+sudo apt-get update
+sudo apt-get install -y build-essential git cmake libssl-dev libcurl4-openssl-dev libsqlite3-dev libmosquitto-dev libcoap-dev
+
+# Build the controller
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+
+# Return to original directory
+cd ../..
+
+make CFLAGS="-g -O2 -Wno-error"
+
+sudo apt-get install -y autoconf automake libtool
+   88  autoreconf -i
+   89  make
+   90  ls
+   91  ./configure
+   92  make
+
